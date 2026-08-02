@@ -15,15 +15,15 @@ const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 
 // 알림 대행 함수 (window 객체 격리 우회)
-const showDetail = (cityName, status) => {
-  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+const showDetail = (cityName, status, temp) => {
+  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태이며 기온은 ${temp}°C 입니다.`)
 }
 </script>
 
 <template>
   <div class="dashboard-wrapper">
     <section class="search-box">
-      <h3>🔍 도시 검색</h3>
+      <h3>🔍 도시 검색(search)</h3>
       <!-- input type="text" v-model="searchQuery" placeholder="검색할 도시 이름 입력" / -->
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="검색할 도시 이름 입력" />
       <p>
@@ -40,9 +40,9 @@ const showDetail = (cityName, status) => {
 
         <span v-if="item.temp >= 25" class="badge hot">🔥 더움 (25도 이상)</span>
         <span v-else-if="item.temp <25 && item.temp >= 5" class = "badge cool">💨 선선함 (25도 미만 5도 이상)</span>
-        <span v-else class = "badge cold">❄️ 추움 (5도 미만)</span>
-
-        <button class="btn-detail" @click.stop="showDetail(item.name, item.status)">상세보기</button>
+        <span v-else class = "badge cold">❄️ 추움 (5도 미만)</span>  
+        <!-- v-else-if 이용 추움 추가 -->
+        <button class="btn-detail" @click.stop="showDetail(item.name, item.status, item.temp)">상세보기</button>
       </div>
     </section>
 
@@ -143,7 +143,7 @@ section {
 }
 .weather-card:has(.hot):hover {
   transform: translateY(-4px);
-  border-color: #FF6347; /* 호버 시 토마토색 테두리 */
+  border-color: #FF6347; 
   box-shadow: 0 12px 24px rgba(255, 99, 71, 0.15);
 }
 .weather-card:has(.hot) h4 {
