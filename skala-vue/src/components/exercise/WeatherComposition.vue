@@ -55,16 +55,16 @@ const showDetail = (cityName, status, temp) => {
 <template>
   <div class="dashboard-wrapper">
     <section class="search-box">
-      <h3>🔍 도시 검색</h3>
+      <h3><img src = "/svg/search.svg" alt="검색" /> 도시 검색</h3>
       <input type="text" :value="searchQuery" @input="(e) => (searchQuery = e.target.value)" placeholder="검색할 도시 이름 입력" />
       <p>
         검색 중인 도시: <strong>{{ searchQuery }}</strong>
       </p>
     </section>
-    <h3>🏙️ 지역별 날씨 현황</h3>
+    <h3><img src = "/svg/city.svg" alt="도시" /> 지역별 날씨 현황</h3>
     
     <section class="list-box">
-      <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
+      <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이(가) 선택되었습니다.`">
         <h4>
           {{ item.name }} <br /> 
           <span class="status-text">{{ item.status }}</span> <br />
@@ -120,6 +120,11 @@ h3 {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+h3 img {
+  width: 24px;
+  height: 24px;
 }
 
 /* 섹션 공통 */
@@ -318,6 +323,7 @@ h3 {
   display: inline-block;
   object-fit: contain;
 }
+
 
 </style>
 

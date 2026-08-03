@@ -13,7 +13,6 @@ defineProps({
 
 <template>
   <div class="search-box">
-    <h3>🔍 도시 검색</h3>
     <input type="text" :value="currentQuery" @input="$emit('update-query', $event.target.value)" placeholder="검색할 도시 이름 입력" />
     <p>
       검색 중인 도시: <strong>{{ currentQuery }}</strong>
@@ -50,7 +49,7 @@ defineProps({
 .search-box p {
   margin: 12px 0 0 4px;
   font-size: 0.9rem;
-  color: #7F8C8D;
+  color: #515959;
 }
 
 .search-box strong {

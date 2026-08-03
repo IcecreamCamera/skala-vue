@@ -41,16 +41,16 @@ watchEffect(() => {
 <template>
   <div class="dashboard-wrapper">
     <BaseDashboardCard>
+      <h3><img src = "/svg/search.svg" alt="검색" /> 도시 검색</h3>
       <SearchBar :current-query="searchQuery" @update-query="(val) => (searchQuery = val)" />
     </BaseDashboardCard>
 
     <BaseDashboardCard>
-    <h3>🏙️ 지역별 날씨 현황</h3>
-    <section class="list-box">
-      <WeatherCard v-for="item in filteredWeatherList" :key="item.id" :city-item="item" @select-card="(msg) => (selectedCityInfo = msg)" @click-detail="showDetail" />
-
-      <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0">😭 검색 결과와 일치하는 도시가 없습니다.</p>
-    </section>
+      <h3><img src = "/svg/city.svg" alt="도시" /> 지역별 날씨 현황</h3>
+      <section class="list-box">
+        <WeatherCard v-for="item in filteredWeatherList" :key="item.id" :city-item="item" @select-card="(msg) => (selectedCityInfo = msg)" @click-detail="showDetail" />
+        <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0">😭 검색 결과와 일치하는 도시가 없습니다.</p>
+      </section>
     </BaseDashboardCard>
 
     <div class="status-bar">
@@ -89,6 +89,11 @@ h3 {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+h3 img {
+  width: 24px;
+  height: 24px;
 }
 
 .list-box {

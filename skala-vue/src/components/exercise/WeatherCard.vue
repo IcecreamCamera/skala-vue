@@ -17,7 +17,7 @@ const showDetail = (cityName, status, temp) => {
 </script>
 
 <template>
-  <div class="weather-card" @click="emit('select-card', `${cityItem.name}이 선택되었습니다.`)">
+  <div class="weather-card" @click="emit('select-card', `${cityItem.name}이(가) 선택되었습니다.`)">
     <h4>
       {{ cityItem.name }} <br /> 
       <span class="status-text">{{ cityItem.status }}</span> <br />
