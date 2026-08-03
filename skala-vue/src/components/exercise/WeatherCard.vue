@@ -21,7 +21,6 @@ const showDetail = (cityName, status, temp) => {
     <h4>
       {{ cityItem.name }} <br /> 
       <span class="status-text">{{ cityItem.status }}</span> <br />
-      <!-- 주소 글자는 지우고, 순수한 이미지 태그만 아래에 넣습니다 -->
       <img :src="cityItem.image" :alt="cityItem.status" class="weather-icon" />
     </h4>
     
@@ -42,14 +41,13 @@ const showDetail = (cityName, status, temp) => {
   cursor: pointer;
   border: 2px solid transparent;
   display: grid;
-  grid-template-columns: 1fr auto; /* 왼쪽은 텍스트 영역, 오른쪽은 버튼 영역 */
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
   
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.03);
-  
-  /* 세로 방향 정렬로 변경 */
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -86,7 +84,6 @@ const showDetail = (cityName, status, temp) => {
   color: #1A5276;
 }
 
-
 .weather-card:has(.cold) {
   background-color: #F0F4F8; 
   border: 1px solid #D5E1ED;
@@ -100,14 +97,13 @@ const showDetail = (cityName, status, temp) => {
   color: #396fa8;
 }
 
-
 .weather-card h4 {
   grid-column: 1 / 2;
   font-size: 1.15rem;
   font-weight: 800;
   margin: 0;
-  white-space: normal;  /* 강제 한 줄 고정을 풀고 자동 줄바꿈 허용 */
-  word-break: keep-all; /* 단어 단위로 깔끔하게 쪼개져서 내려가도록 설정 */
+  white-space: normal;  
+  word-break: keep-all;
 }
 
 .weather-card p {
@@ -117,7 +113,6 @@ const showDetail = (cityName, status, temp) => {
   margin: 2px 0;
   color: #566573;
 }
-
 
 .badge {
   grid-column: 1 / 2;
@@ -143,7 +138,6 @@ const showDetail = (cityName, status, temp) => {
   color: #FFFFFF;
 }
 
-
 .btn-detail {
   grid-column: 2 / 3;
   grid-row: 1 / 4;
@@ -166,12 +160,10 @@ const showDetail = (cityName, status, temp) => {
   transform: scale(1);
 }
 
-
-/* 스타일 태그에 아이콘 크기 지정 여부를 확인하세요 */
 .weather-icon {
-  width: 42px;         /* 아이콘의 가로 크기 */
-  height: 42px;        /* 아이콘의 세로 크기 */
-  margin-top: 6px;     /* 글자와 아이콘 사이의 간격 */
+  width: 42px;         
+  height: 42px;        
+  margin-top: 6px;    
   display: inline-block;
   object-fit: contain;
 }

@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed, watch, watchEffect } from 'vue'
 
-// 1. [1일차 데이터] 가상의 백엔드 데이터 배열
 const weatherList = ref([
   { id: 'city_01', name: '서울', temp: 24, status: '비', image: '/svg/rain.svg' },
   { id: 'city_02', name: '수원', temp: 28, status: '맑음', image:'/svg/sunny.svg' },
@@ -14,7 +13,6 @@ const weatherList = ref([
   { id: 'city_09', name: '헬싱키', temp: -2, status: '구름많음', image: '/svg/partly_cloudy.svg' }
 ])
 
-// 2. [1일차 데이터] 검색어 및 알림창 제어용 데이터
 const searchQuery = ref('')
 const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 
@@ -62,13 +60,12 @@ const showDetail = (cityName, status, temp) => {
       </p>
     </section>
     <h3><img src = "/svg/city.svg" alt="도시" /> 지역별 날씨 현황</h3>
-    
+    <!--이모지 대신 svg 사용-->
     <section class="list-box">
       <div v-for="item in filteredWeatherList" :key="item.id" class="weather-card" @click="selectedCityInfo = `${item.name}이(가) 선택되었습니다.`">
         <h4>
           {{ item.name }} <br /> 
           <span class="status-text">{{ item.status }}</span> <br />
-          <!-- 주소 글자는 지우고, 순수한 이미지 태그만 아래에 넣습니다 -->
           <img :src="item.image" :alt="item.status" class="weather-icon" />
         </h4>
         
@@ -80,7 +77,7 @@ const showDetail = (cityName, status, temp) => {
         <button class="btn-detail" @click.stop="showDetail(item.name, item.status, item.temp)">상세</button>
       </div>
 
-      <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0">😭 검색 결과와 일치하는 도시가 없습니다.</p>
+      <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0"><img src = '/svg/xmark.svg' alt="X"/> 결과와 일치하는 도시가 없습니다.</p>
     </section>
 
     <div class="status-bar">
@@ -98,12 +95,11 @@ const showDetail = (cityName, status, temp) => {
   background-color: #EBF3ED;
   color: #2C3E50;
   padding: 32px;
-  
-  /* 💥 이 부분을 수정합니다 💥 */
-  width: 100%;           /* 너비를 100%로 설정 */
-  max-width: 100%;       /* 최대 너비 제한을 해제하거나 100%로 변경 */
-  margin: 0;             /* 바깥 여백 제거 */
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+
+  width: 100%;       
+  max-width: 100%;      
+  margin: 0;            
+  box-sizing: border-box;
   
   border: 1px solid #D1E2D6;
   border-radius: 24px;
@@ -111,7 +107,6 @@ const showDetail = (cityName, status, temp) => {
   letter-spacing: -0.04em;
 }
 
-/* 헤더 타이틀 */
 h3 {
   font-size: 1.3rem;
   font-weight: 800;
@@ -127,15 +122,18 @@ h3 img {
   height: 24px;
 }
 
-/* 섹션 공통 */
+section p img{
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
 .list-box {
   margin-bottom: 32px;
   display: grid;
-  /* 💡 핵심: 카드가 최소 220px을 유지하되, 공간이 남으면 자동으로 늘어나며 채웁니다 */
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
-
 
 /* 검색 상자 */
 .search-box {
@@ -174,20 +172,20 @@ h3 img {
   margin-left: 4px;
 }
 
+/* 날씨카드 */
 .weather-card {
   padding: 20px;
   border-radius: 18px;
   cursor: pointer;
   border: 2px solid transparent;
   display: grid;
-  grid-template-columns: 1fr auto; /* 왼쪽은 텍스트 영역, 오른쪽은 버튼 영역 */
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
   
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.03);
-  
-  /* 세로 방향 정렬로 변경 */
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -304,6 +302,15 @@ h3 img {
   transform: scale(1);
 }
 
+.weather-icon {   /* svg 크기조절 */
+  width: 42px; 
+  height: 42px; 
+  margin-top: 6px;     
+  display: inline-block;
+  object-fit: contain;
+}
+
+/* 상태창 */
 .status-bar {
   background-color: rgba(255, 255, 255, 0.6);
   border: 2px dashed #D1E2D6;
@@ -313,15 +320,6 @@ h3 img {
   font-size: 0.9rem;
   font-weight: 600;
   color: #566573;
-}
-
-/* 스타일 태그에 아이콘 크기 지정 여부를 확인하세요 */
-.weather-icon {
-  width: 42px;         /* 아이콘의 가로 크기 */
-  height: 42px;        /* 아이콘의 세로 크기 */
-  margin-top: 6px;     /* 글자와 아이콘 사이의 간격 */
-  display: inline-block;
-  object-fit: contain;
 }
 
 

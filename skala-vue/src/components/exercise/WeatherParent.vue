@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch, watchEffect } from 'vue'
-// 1. 컴포넌트 파일명 국룰 표기법(PascalCase) 매칭 수입
+
 import BaseDashboardCard from './BaseDashboardCard.vue'
 import SearchBar from './SearchBar.vue'
 import WeatherCard from './WeatherCard.vue'
@@ -34,8 +34,6 @@ watch(selectedCityInfo, (newInfo) => {
 watchEffect(() => {
   console.log(`🤖 [watchEffect 자동 호출] 현재 검색어 '${searchQuery.value}'에 매칭되는 API 데이터를 필터링합니다.`)
 })
-
-
 </script>
 
 <template>
@@ -49,7 +47,7 @@ watchEffect(() => {
       <h3><img src = "/svg/city.svg" alt="도시" /> 지역별 날씨 현황</h3>
       <section class="list-box">
         <WeatherCard v-for="item in filteredWeatherList" :key="item.id" :city-item="item" @select-card="(msg) => (selectedCityInfo = msg)" @click-detail="showDetail" />
-        <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0">😭 검색 결과와 일치하는 도시가 없습니다.</p>
+        <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0"><img src = "/svg/xmark.svg" alt = "X" /> 결과와 일치하는 도시가 없습니다.</p>
       </section>
     </BaseDashboardCard>
 
@@ -69,11 +67,10 @@ watchEffect(() => {
   color: #2C3E50;
   padding: 32px;
   
-  /* 💥 이 부분을 수정합니다 💥 */
-  width: 100%;           /* 너비를 100%로 설정 */
-  max-width: 100%;       /* 최대 너비 제한을 해제하거나 100%로 변경 */
-  margin: 0;             /* 바깥 여백 제거 */
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+  width: 100%;          
+  max-width: 100%;      
+  margin: 0;           
+  box-sizing: border-box; 
   
   border: 1px solid #D1E2D6;
   border-radius: 24px;
@@ -96,10 +93,15 @@ h3 img {
   height: 24px;
 }
 
+section p img{
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
 .list-box {
   margin-bottom: 32px;
   display: grid;
-  /* 💡 핵심: 카드가 최소 220px을 유지하되, 공간이 남으면 자동으로 늘어나며 채웁니다 */
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
