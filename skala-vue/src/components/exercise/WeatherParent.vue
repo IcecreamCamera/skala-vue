@@ -35,9 +35,7 @@ watchEffect(() => {
   console.log(`🤖 [watchEffect 자동 호출] 현재 검색어 '${searchQuery.value}'에 매칭되는 API 데이터를 필터링합니다.`)
 })
 
-const showDetail = (cityName, status) => {
-  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
-}
+
 </script>
 
 <template>

@@ -9,6 +9,11 @@ defineProps({
 
 // 2. 상위로 송신할 두 가지 경로의 커스텀 이벤트 식별자 등록 (매크로)
 const emit = defineEmits(['select-card', 'click-detail'])
+
+const showDetail = (cityName, status, temp) => {
+  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태이며 기온은 ${temp}°C 입니다.`)
+}
+
 </script>
 
 <template>
