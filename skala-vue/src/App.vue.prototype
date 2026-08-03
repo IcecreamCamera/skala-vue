@@ -25,6 +25,11 @@ import ModelForm from "./components/practices/basic/ModelForm.vue"
 import ModelModifier from "./components/practices/basic/ModelModifier.vue"
 import StyleScoped from "./components/practices/basic/StyleScoped.vue"
 
+/* 8월 3일 composition API */
+
+import ReactiveRef from './components/practices/composition/ReactiveRef.vue'
+import ReactiveReactive from './components/practices/composition/ReactiveReactive.vue'
+
 import StoreCounter from './components/practices/library/StoreCounter.vue'
 import AxiosWeather from './components/practices/library/AxiosWeather.vue'
 import AxiosJson from './components/practices/library/AxiosJson.vue'
@@ -39,70 +44,8 @@ import EcmaScript from './components/practices/library/EcmaScript.vue'
     <SampleOne />
     <h1>SampleTwo</h1>
     <hr />
-
     <SampleTwo />
-    <h1>VueHtml</h1>
-    <hr />
-    <VueHtml />
-    <h1>VueHtmlXss</h1>
-    <hr />
-    <VueHtmlXss />
-    <h1>VueText</h1>
-    <hr />
-    <VueText />
-    <h1>VueBind</h1>
-    <hr />
-    <VueBind />
-    <h1>VueBindClass</h1>
-    <hr />
-    <VueBindClass />
-    <h1>VueBindStyle</h1>
-    <hr />
-    <VueBindStyle />
-    <h1>VueIf</h1>
-    <hr />
-    <VueIf />
-    <h1>VueShow</h1>
-    <hr />
-    <VueShow />
-    <h1>VueFor</h1>
-    <hr />
-    <VueFor />
-    <h1>VuePre</h1>
-    <hr />
-    <VuePre />
-    <h1>VueCloak</h1>
-    <hr />
-    <VueCloak />
-    <h1>VueOnce</h1>
-    <hr />
-    <VueOnce />
-    <h1>VueMemo</h1>
-    <hr />
-    <VueMemo />
 
-    <h1>EventBasic</h1>
-    <hr />
-    <EventBasic />
-    <h1>EventObject</h1>
-    <hr />
-    <EventObject />
-    <h1>EventModifier</h1>
-    <hr />
-    <EventModifier />
-    
-    <h1>ModelBasic</h1>
-    <hr />
-    <ModelBasic />
-    <h1>ModelForm</h1>
-    <hr />
-    <ModelForm />
-    <h1>ModelModifier</h1>
-    <hr />
-    <ModelModifier />
-    <h1>StyleScoped</h1>
-    <hr />
-    <StyleScoped />
 
     <h1>1. Store</h1>
     <hr />

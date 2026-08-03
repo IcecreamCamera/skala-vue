@@ -37,13 +37,13 @@ const showDetail = (cityName, status, temp) => {
       <div v-for="item in weatherList" :key="item.id" v-show = "item.name.includes(searchQuery)" class="weather-card" @click="selectedCityInfo = `${item.name}이 선택되었습니다.`">
         <h4>{{ item.name }} ({{ item.status }})</h4>
         <p>현재 기온: {{ item.temp }}°C</p>
-
         <span v-if="item.temp >= 25" class="badge hot">🔥 더움 (25도 이상)</span>
         <span v-else-if="item.temp <25 && item.temp >= 5" class = "badge cool">💨 선선함 (25도 미만 5도 이상)</span>
         <span v-else class = "badge cold">❄️ 추움 (5도 미만)</span>  
         <!-- v-else-if 이용 추움 추가 -->
         <button class="btn-detail" @click.stop="showDetail(item.name, item.status, item.temp)">상세보기</button>
       </div>
+      
     </section>
 
     <div class="status-bar">
@@ -62,8 +62,12 @@ const showDetail = (cityName, status, temp) => {
   background-color: #EBF3ED;
   color: #2C3E50;
   padding: 32px;
-  max-width: 480px;
-  margin: 40px auto;
+  
+  width: 100%;           /* 너비를 100%로 설정 */
+  max-width: 100%;       /* 최대 너비 제한을 해제하거나 100%로 변경 */
+  margin: 0;             /* 바깥 여백 제거 */
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+  
   border: 1px solid #D1E2D6;
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(44, 62, 80, 0.08);
@@ -163,7 +167,6 @@ section {
   color: #1A5276;
 }
 
-
 .weather-card:has(.cold) {
   background-color: #F0F4F8; 
   border: 1px solid #D5E1ED;
@@ -193,7 +196,6 @@ section {
   color: #566573;
 }
 
-
 .badge {
   grid-column: 1 / 2;
   justify-self: start;
@@ -218,7 +220,6 @@ section {
   color: #FFFFFF;
 }
 
-
 .btn-detail {
   grid-column: 2 / 3;
   grid-row: 1 / 4;
@@ -239,7 +240,6 @@ section {
   transform: scale(1.03);
 }
 
-
 .status-bar {
   background-color: rgba(255, 255, 255, 0.6);
   border: 2px dashed #D1E2D6;
@@ -251,3 +251,4 @@ section {
   color: #566573;
 }
 </style>
+
