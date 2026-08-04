@@ -26,9 +26,9 @@ import UnitToggler from './components/exercise/UnitToggler.vue'
     <hr />
     <div class="dashboard-wrapper">
       <nav class="navigation-bar">
-        <RouterLink to="/" class="nav-item">🌦️ 날씨 대시보드</RouterLink>
+        <RouterLink to="/" class="nav-item"><img src="/svg/weather.svg" alt = '날씨' /> 날씨 대시보드</RouterLink>
         <span class="divider">|</span>
-        <RouterLink to="/about" class="nav-item">ℹ️ 서비스 소개</RouterLink>
+        <RouterLink to="/about" class="nav-item"><img src = '/svg/info.svg' alt = "서비스 소개" /> 서비스 소개</RouterLink>
       </nav>
       <main>
         <RouterView />
@@ -45,9 +45,9 @@ import UnitToggler from './components/exercise/UnitToggler.vue'
     <hr />
     <div class="dashboard-wrapper">
       <nav class="navigation-bar">
-        <RouterLink to="/" class="nav-item">🌦️ 날씨 대시보드</RouterLink>
+        <RouterLink to="/" class="nav-item"><img src="/svg/weather.svg" alt = '날씨' /> 날씨 대시보드</RouterLink>
         <span class="divider">|</span>
-        <RouterLink to="/about" class="nav-item">ℹ️ 서비스 소개</RouterLink>
+        <RouterLink to="/about" class="nav-item"> <img src = '/svg/info.svg' alt = "서비스 소개" /> 서비스 소개</RouterLink>
         <UnitToggler />
       </nav>
       <main>

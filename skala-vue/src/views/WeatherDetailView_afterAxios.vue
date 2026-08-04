@@ -13,9 +13,15 @@ const isLoading = ref(false)
 
 // 💡 [고도화] 라우터 ID 파라미터를 실제 OpenWeatherMap 쿼리용 영문 명칭과 한글 명칭으로 매핑하는 사전 장부
 const cityMapping = {
-  city_01: { english: 'Seoul', korean: '대한민국 서울특별시' },
-  city_02: { english: 'Suwon', korean: '경기도 수원시 영통구' },
-  city_03: { english: 'Busan', korean: '부산광역시 해운대구' },
+  city_01: { english: 'Seoul', korean: '서울' },
+  city_02: { english: 'Suwon', korean: '수원' },
+  city_03: { english: 'Busan', korean: '부산' },
+  city_04: { english: 'Gangneung', korean: '강릉'},
+  city_05: { english: 'Saint Petersburg', korean: '상트페테르부르크' },
+  city_06: { english: 'Tampa', korean: '탬파' },
+  city_07: { english: 'Ho Chi Minh City', korean: '호치민' },
+  city_08: { english: 'New York', korean: '뉴욕' },
+  city_09: { english: 'Helsinki', korean: '헬싱키' }
 }
 
 onMounted(async () => {
@@ -25,7 +31,7 @@ onMounted(async () => {
   if (targetCity) {
     isLoading.value = true
     try {
-      const API_KEY = '8964edc63b366d27b5b728b7976570b7'
+      const API_KEY = 'a9a51b0de5bdd376686910e584c10f5c'
       // 🟢 [고도화] 가짜 Mock 객체 대신, 실제 고유 타깃 도시 주소를 정밀 저격 호출
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${targetCity.english}&appid=${API_KEY}&units=metric&lang=kr`)
 

@@ -17,7 +17,7 @@ const selectedCityInfo = ref('카드를 클릭하거나 검색해 보세요.')
 const isLoading = ref(false)
 
 // 💡 OpenWeatherMap 필수 연동 규격 정의
-const API_KEY = '8964edc63b366d27b5b728b7976570b7'
+const API_KEY = 'a9a51b0de5bdd376686910e584c10f5c'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
 
 // 🟢 [고도화] 3개 도시의 실제 실시간 데이터를 병렬로 긁어오는 비동기 파이프라인 함수

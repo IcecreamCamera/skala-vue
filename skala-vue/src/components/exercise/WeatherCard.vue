@@ -1,6 +1,8 @@
 <script setup>
+import { computed } from 'vue'
+import { useConfigStore } from '../../stores/configStore'
 // 1. 상위로부터 단방향 주입받을 객체 데이터 규격 검수 (매크로)
-defineProps({
+const props = defineProps({
   cityItem: {
     type: Object,
     required: true,
@@ -10,26 +12,46 @@ defineProps({
 // 2. 상위로 송신할 두 가지 경로의 커스텀 이벤트 식별자 등록 (매크로)
 const emit = defineEmits(['select-card', 'click-detail'])
 
-const showDetail = (cityName, status, temp) => {
+/* const showDetail = (cityName, status, temp) => {
   window.alert(`${cityName}의 현재 날씨는 [${status}] 상태이며 기온은 ${temp}°C 입니다.`)
-}
+} */
+const configStore = useConfigStore()
+// 🔥 [핵심 미션] 스토어의 상태값이 'fahrenheit'일 때만 화씨 공식 적용 연산
+const displayTemp = computed(() => {
+  const rawTemp = props.cityItem.temp // 기본 원본 데이터는 섭씨 숫자
+  if (configStore.unit === 'fahrenheit') {
+    return Math.round((rawTemp * 9) / 5 + 32) // 화씨 변환 연산
+  }
+  return rawTemp // 'celsius'일 때는 원본 그대로 반환
+})
+
+
 
 </script>
 
 <template>
   <div class="weather-card" @click="emit('select-card', `${cityItem.name}이(가) 선택되었습니다.`)">
     <h4>
+
       {{ cityItem.name }} <br /> 
       <span class="status-text">{{ cityItem.status }}</span> <br />
-      <img :src="cityItem.image" :alt="cityItem.status" class="weather-icon" />
+      <!-- 🟢 src 앞에 콜론(:) 필수, 중간 경로와 올바른 변수 매핑 적용 -->
+      <img 
+        v-if="cityItem.icon"
+        :src="'https://openweathermap.org/img/wn/' + cityItem.icon + '@2x.png'" 
+        :alt="cityItem.status" 
+        class="weather-icon" 
+      />
+
     </h4>
     
-    <p>현재 기온: {{ cityItem.temp }}°C</p>
+    <p>현재 기온: {{ displayTemp }}{{ configStore.unitSymbol }}</p>
     <span v-if="cityItem.temp >= 25" class="badge hot">🔥 더움</span>
     <span v-else-if="cityItem.temp <25 && cityItem.temp >= 5" class = "badge cool">💨 선선함</span>
     <span v-else class = "badge cold">❄️ 추움</span>  
     <!-- v-else-if 이용 추움 추가 -->
-    <button class="btn-detail" @click.stop="showDetail(cityItem.name, cityItem.status, cityItem.temp)">상세</button>
+    <button class="btn-detail" @click.stop="emit('click-detail', cityItem.id)">상세</button>
+    <!--"showDetail(cityItem.name, cityItem.status, cityItem.temp)" window alert용-->
   </div>
 </template>
 
@@ -161,11 +183,25 @@ const showDetail = (cityName, status, temp) => {
 }
 
 .weather-icon {
-  width: 42px;         
-  height: 42px;        
-  margin-top: 6px;    
+  width: 84px;         
+  height: 84px;        
   display: inline-block;
   object-fit: contain;
+  vertical-align: middle; 
+  margin: 8px auto;      
+
+  /* 💡 밝은 배경용 강한 그림자 조합 */
+  /* 첫 번째 라인은 형태를 꽉 잡아주고, 두 번째 라인은 넓고 진하게 퍼지도록 설계했습니다 */
+  filter: drop-shadow(0 3px 4px rgba(15, 23, 42, 0.25)) 
+          drop-shadow(0 8px 16px rgba(15, 23, 42, 0.18));
+
+  animation: floatWeather 3s ease-in-out infinite;
+}
+
+@keyframes floatWeather {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
 }
 
 

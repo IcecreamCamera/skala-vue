@@ -95,12 +95,10 @@ const showDetail = (cityName, status, temp) => {
   background-color: #EBF3ED;
   color: #2C3E50;
   padding: 32px;
-
   width: 100%;       
   max-width: 100%;      
   margin: 0;            
   box-sizing: border-box;
-  
   border: 1px solid #D1E2D6;
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(44, 62, 80, 0.08);
