@@ -3,7 +3,7 @@ import WeatherHomeView from '../views/WeatherHomeView.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/skala-vue/',
     name: 'WeatherHome',
     component: WeatherHomeView,
   },
