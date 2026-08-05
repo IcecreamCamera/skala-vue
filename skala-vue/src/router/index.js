@@ -3,22 +3,22 @@ import WeatherHomeView from '../views/WeatherHomeView.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/skala-vue/',
     name: 'WeatherHome',
     component: WeatherHomeView,
   },
   {
-    path: '/about',
+    path: '/skala-vue/about',
     name: 'WeatherAbout',
     component: () => import('../views/WeatherAboutView.vue'),
   },
   {
-    path: '/weather/:cityId',
+    path: '/skala-vue/weather/:cityId',
     name: 'WeatherDetail',
     component: () => import('../views/WeatherDetailView.vue'),
   },
   {
-    path: '/:pathMatch(.*)*',
+    path: '/skala-vue/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFoundView.vue'),
   },
