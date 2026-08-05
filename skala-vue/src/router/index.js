@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import WeatherHomeView from '../views/WeatherHomeView.vue'
 
 const routes = [
   {
-    path: '/skala-vue/',
+    path: '/',
     name: 'WeatherHome',
     component: WeatherHomeView,
   },
@@ -25,7 +25,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 })
 

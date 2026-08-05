@@ -12,7 +12,7 @@ const router = useRouter()
 const route = useRoute()
 const isLoading = ref(false)
 
-const API_KEY = 'a9a51b0de5bdd376686910e584c10f5c' // 💡 자신의 API KEY를 입력하세요.
+const API_KEY = 'a9a51b0de5bdd376686910e584c10f5c'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
 
 // 초기 기본 도시 목록 정의 (영문 쿼리명과 한글 노출명 매핑)
