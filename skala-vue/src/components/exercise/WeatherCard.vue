@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useConfigStore } from '../../stores/configStore'
+
 // 1. 상위로부터 단방향 주입받을 객체 데이터 규격 검수 (매크로)
 const props = defineProps({
   cityItem: {
@@ -9,13 +10,10 @@ const props = defineProps({
   },
 })
 
-// 2. 상위로 송신할 두 가지 경로의 커스텀 이벤트 식별자 등록 (매크로)
-const emit = defineEmits(['select-card', 'click-detail'])
-
-/* const showDetail = (cityName, status, temp) => {
-  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태이며 기온은 ${temp}°C 입니다.`)
-} */
+// 2. 상위로 송신할 커스텀 이벤트 식별자 등록 ('delete-card' 추가)
+const emit = defineEmits(['select-card', 'click-detail', 'delete-card'])
 const configStore = useConfigStore()
+
 // 🔥 [핵심 미션] 스토어의 상태값이 'fahrenheit'일 때만 화씨 공식 적용 연산
 const displayTemp = computed(() => {
   const rawTemp = props.cityItem.temp // 기본 원본 데이터는 섭씨 숫자
@@ -26,13 +24,14 @@ const displayTemp = computed(() => {
 })
 
 
-
 </script>
 
 <template>
   <div class="weather-card" @click="emit('select-card', `${cityItem.name}이(가) 선택되었습니다.`)">
-    <h4>
+    <!-- 1. 우측 상단 절대 위치 또는 카드 내부에 배치할 삭제 버튼 (이벤트 전파 차단 .stop 필수) -->
+    <button class="btn-delete" @click.stop="emit('delete-card')">✕</button>
 
+    <h4>
       {{ cityItem.name }} <br /> 
       <span class="status-text">{{ cityItem.status }}</span> <br />
       <!-- 🟢 src 앞에 콜론(:) 필수, 중간 경로와 올바른 변수 매핑 적용 -->
@@ -42,30 +41,55 @@ const displayTemp = computed(() => {
         :alt="cityItem.status" 
         class="weather-icon" 
       />
-
     </h4>
     
     <p>현재 기온: {{ displayTemp }}{{ configStore.unitSymbol }}</p>
     <span v-if="cityItem.temp >= 25" class="badge hot">🔥 더움</span>
-    <span v-else-if="cityItem.temp <25 && cityItem.temp >= 5" class = "badge cool">💨 선선함</span>
-    <span v-else class = "badge cold">❄️ 추움</span>  
-    <!-- v-else-if 이용 추움 추가 -->
+    <span v-else-if="cityItem.temp < 25 && cityItem.temp >= 5" class="badge cool">💨 선선함</span>
+    <span v-else class="badge cold">❄️ 추움</span>  
+
     <button class="btn-detail" @click.stop="emit('click-detail', cityItem.id)">상세</button>
-    <!--"showDetail(cityItem.name, cityItem.status, cityItem.temp)" window alert용-->
+    
   </div>
 </template>
 
 
 <style scoped>
+/* ==========================================================================
+   1. 기본 액션 버튼 스타일 (우측 상단 ✕ 삭제 버튼)
+   ========================================================================== */
+.btn-delete {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #a0aec0;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  z-index: 10; /* 날씨 아이콘 둥둥 뜨는 애니메이션보다 위에 보이도록 배치 */
+  transition: color 0.2s, transform 0.2s;
+}
+
+.btn-delete:hover {
+  color: #e74c3c; /* 마우스 올리면 빨간색으로 변경 */
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   2. 메인 날씨 카드 레이아웃 (Flex 구조)
+   ========================================================================== */
 .weather-card {
+  position: relative;
   padding: 20px;
+  padding-bottom: 20px; 
+  min-height: 190px;    
   border-radius: 18px;
   cursor: pointer;
   border: 2px solid transparent;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 12px;
+  box-sizing: border-box;
   
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 12px rgba(44, 62, 80, 0.03);
@@ -74,12 +98,43 @@ const displayTemp = computed(() => {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+}
+
+/* ==========================================================================
+   3. 🟢 [핵심] 상세 버튼 스타일 (조그만 버튼 형태로 우측 하단 강제 안착)
+   ========================================================================== */
+.btn-detail {
+  /* 🟢 relative를 absolute로 바꾸어야 카드의 오른쪽 아래 구석으로 이동합니다 */
+  position: absolute;
+  bottom: 20px; /* 카드 바닥 테두리로부터 띄울 간격 */
+  right: 20px;  /* 카드 오른쪽 테두리로부터 띄울 간격 */
+
+  /* 보내주신 크기 그대로 고정 */
+  width: 70px;
+  height: 32px;
   
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.03);
+  background-color: #27AE60;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 16px; 
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap; 
 }
 
 
+.btn-detail:hover {
+  background-color: #219653;
+  transform: scale(1.05); /* 마우스 올렸을 때 살짝 커지는 이펙트 */
+}
+
+/* ==========================================================================
+   4. 조건부 배경 및 타이틀 컬러 스키마 (기존 디자인 100% 유지)
+   ========================================================================== */
+/* 🔥 더움 상태 */
 .weather-card:has(.hot) {
   background-color: #FFF0ED; 
   border: 1px solid #FFD6CE;
@@ -93,6 +148,7 @@ const displayTemp = computed(() => {
   color: #D32F2F;
 }
 
+/* 💨 선선함 상태 */
 .weather-card:has(.cool) {
   background-color: #EBF5FF; 
   border: 1px solid #CCE5FF;
@@ -106,6 +162,7 @@ const displayTemp = computed(() => {
   color: #1A5276;
 }
 
+/* ❄️ 추움 상태 */
 .weather-card:has(.cold) {
   background-color: #F0F4F8; 
   border: 1px solid #D5E1ED;
@@ -119,8 +176,10 @@ const displayTemp = computed(() => {
   color: #396fa8;
 }
 
+/* ==========================================================================
+   5. 내부 텍스트 및 기상 아이콘 요소 (기존 디자인 100% 유지)
+   ========================================================================== */
 .weather-card h4 {
-  grid-column: 1 / 2;
   font-size: 1.15rem;
   font-weight: 800;
   margin: 0;
@@ -128,17 +187,21 @@ const displayTemp = computed(() => {
   word-break: keep-all;
 }
 
+.status-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
 .weather-card p {
-  grid-column: 1 / 2;
   font-size: 0.95rem;
   font-weight: 500;
   margin: 2px 0;
   color: #566573;
 }
 
+/* 배지 공통 및 개별 스타일 */
 .badge {
-  grid-column: 1 / 2;
-  justify-self: start;
   padding: 6px 12px;
   font-size: 0.75rem;
   font-weight: 700;
@@ -153,6 +216,7 @@ const displayTemp = computed(() => {
 
 .badge.cool {
   background-color: #4A90E2;
+  color: #FFFFFF;
 }
 
 .badge.cold {
@@ -160,28 +224,7 @@ const displayTemp = computed(() => {
   color: #FFFFFF;
 }
 
-.btn-detail {
-  grid-column: 2 / 3;
-  grid-row: 1 / 4;
-  margin-top: auto;
-  
-  background-color: #27AE60;
-  color: #FFFFFF;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn-detail:hover {
-  background-color: #219653;
-  transform: scale(1);
-}
-
+/* 날씨 아이콘 및 둥둥 뜨는 애니메이션 */
 .weather-icon {
   width: 84px;         
   height: 84px;        
@@ -190,8 +233,6 @@ const displayTemp = computed(() => {
   vertical-align: middle; 
   margin: 8px auto;      
 
-  /* 💡 밝은 배경용 강한 그림자 조합 */
-  /* 첫 번째 라인은 형태를 꽉 잡아주고, 두 번째 라인은 넓고 진하게 퍼지도록 설계했습니다 */
   filter: drop-shadow(0 3px 4px rgba(15, 23, 42, 0.25)) 
           drop-shadow(0 8px 16px rgba(15, 23, 42, 0.18));
 
@@ -203,6 +244,4 @@ const displayTemp = computed(() => {
   50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
 }
-
-
 </style>

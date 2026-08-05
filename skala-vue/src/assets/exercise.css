@@ -121,15 +121,6 @@ input {
   width: 90%;
   font-size: 14px;
 }
-.weather-card {
-  background: #fff;
-  border: 1px solid #dee2e6;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-}
 .badge {
   display: inline-block;
   padding: 4px 8px;
@@ -142,13 +133,6 @@ input {
 }
 .cool {
   background-color: #74b9ff;
-}
-.btn-detail {
-  position: absolute;
-  right: 12px;
-  top: 15px;
-  padding: 6px 10px;
-  cursor: pointer;
 }
 .status-bar {
   background: #e8f5e9;

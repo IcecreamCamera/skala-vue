@@ -41,8 +41,8 @@ import UnitToggler from './components/exercise/UnitToggler.vue'
     </div>
   </div>   -->
   <div class="app-container">
-    <h1>⛅ 과제 5: 스토어적용</h1>
-    <hr />
+    <!--<h1>⛅ 과제 5: 스토어적용</h1>
+    <hr />-->
     <div class="dashboard-wrapper">
       <nav class="navigation-bar">
         <RouterLink to="/" class="nav-item"><img src="/svg/weather.svg" alt = '날씨' /> 날씨 대시보드</RouterLink>
