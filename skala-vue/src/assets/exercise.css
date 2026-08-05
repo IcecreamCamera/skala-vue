@@ -1,69 +1,120 @@
-/* 1. 전체 최외곽 컨테이너 레벨 정의 */
-.app-container {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 30px 40px;
-  background-color: #ebf3f7;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  font-family:
-    'Pretendard',
-    -apple-system,
-    BlinkMacSystemFont,
-    system-ui,
-    Roboto,
-    sans-serif;
-  color: #2c3e50;
+/* ==========================================================================
+   1. 다크모드/라이트모드 전역 색상 변수 설정
+========================================================================== */
+
+/* ☀️ [기본 상태] 라이트 모드 (보내주신 기존 색상들 적용) */
+:root {
+  --app-bg: #ebf3f7;               /* 전체 바깥 배경 */
+  --dashboard-bg: #EBF3ED;         /* 대시보드 배경 (연두색 계열) */
+  --dashboard-border: #D1E2D6;     /* 대시보드 테두리 */
+  --nav-bg-gradient: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%); /* 네비 바 */
+  --nav-border: #cce3ff;           /* 네비 바 테두리 */
+  
+  --box-bg: #f8f9fa;               /* 검색창, 리스트 박스 배경 */
+  --box-border: #e9ecef;           /* 박스 테두리 */
+  --hr-color: #e9ecef;             /* 구분선 색상 */
+  
+  --text-main: #2c3e50;            /* 메인 글자색 */
+  --text-title: #1a252f;           /* h1 대제목 글자색 */
+  --text-muted: #7f8c8d;           /* 비활성화 링크 글자색 */
+  --divider-color: #dcdde1;        /* 네비 바 사이 세로줄 색상 */
+  
+  --input-bg: #ffffff;             /* 입력창 배경 */
+  --input-text: #2c3e50;           /* 입력창 글자색 */
+  --input-border: #cccccc;         /* 입력창 테두리 */
+
+  --button-bg: #eeeeee;            /* 다크모드 토글 버튼 배경 */
 }
-/* 2. 대주제 (h1) 및 구분선 (hr) 정돈 */
+
+/* 🌙 [활성화 상태] 다크 모드 (눈이 편안한 네이비/다크 그레이 톤) */
+html[data-theme="dark"] {
+  --app-bg: #111827;               /* 매우 어두운 블루블랙 */
+  --dashboard-bg: #1f2937;         /* 어두운 회색 대시보드 */
+  --dashboard-border: #374151;     /* 어두운 테두리 */
+  --nav-bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* 어두운 네비 바 */
+  --nav-border: #334155;           /* 어두운 네비 테두리 */
+  
+  --box-bg: #111827;               /* 박스 내부를 더 어둡게 */
+  --box-border: #374151;           /* 박스 테두리 */
+  --hr-color: #374151;             /* 구분선 색상 */
+  
+  --text-main: #e5e7eb;            /* 밝은 회색 글자색 */
+  --text-title: #f9fafb;           /* 아주 밝은 타이틀 글자색 */
+  --text-muted: #9ca3af;           /* 흐린 회색 글자색 */
+  --divider-color: #4b5563;        /* 세로줄 색상 */
+  
+  --input-bg: #374151;             /* 입력창 어둡게 */
+  --input-text: #ffffff;           /* 입력창 글자 흰색 */
+  --input-border: #4b5563;         /* 입력창 테두리 */
+
+  --button-bg: #374151;            /* 다크모드 토글 버튼 배경 */
+}
+
+
+/* ==========================================================================
+   2. 기존 스타일 구조에 변수(var) 적용
+========================================================================== */
+
+/* 사이트 전체 바디 배경 전환 효과 */
+body {
+  background-color: var(--app-bg);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* 대주제 (h1) 및 구분선 (hr) 정돈 */
 .app-container h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--text-main); /* 변수 적용 */
   margin-top: 48px;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
 /* 첫 번째 h1 상단 여백 제거 */
 .app-container h1:first-of-type {
   margin-top: 0;
 }
+
 /* hr */
 .app-container hr {
   border: none;
-  border-top: 2px solid #e9ecef;
+  border-top: 2px solid var(--hr-color); /* 변수 적용 */
   margin-bottom: 24px;
 }
+
 /* 세션 대제목 (h1) 스타일링 */
 h1 {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #1a252f;
+  color: var(--text-title); /* 변수 적용 */
   margin-top: 40px;
   margin-bottom: 8px;
 }
 
+/* 네비게이션 바 정렬 및 디자인 */
 .navigation-bar {
   display: flex;
-  justify-content: center;
+  /* 기존 center 대신 양끝 정렬로 변경 */
+  justify-content: space-between; 
   align-items: center;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
-  border: 1px solid #cce3ff;
-  padding: 15px;
-  padding-left: 55px;
-  padding-right: 55px;
+  background: var(--nav-bg-gradient);
+  border: 1px solid var(--nav-border);
+  padding: 15px 40px; /* 좌우 패딩을 적절히 조절하여 안쪽 여백 확보 */
   border-radius: 40px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
+  transition: background 0.3s, border-color 0.3s;
 }
+
 .nav-item {
-  display: flex;          /* flexbox 레이아웃 적용 */
-  align-items: center;    /* 아이콘과 텍스트 세로 중앙 정렬 */
-  gap: 6px;               /* 아이콘과 텍스트 사이 간격 (원하는 대로 조절 가능) */
+  display: flex;          
+  align-items: center;    
+  gap: 6px;               
   text-decoration: none;
-  color: #7f8c8d;
+  color: var(--text-muted); /* 변수 적용 */
   font-weight: bold;
   font-size: 16px;
   transition: color 0.2s ease;
@@ -72,29 +123,30 @@ h1 {
 .nav-item img {
   width: 24px;
   height: 24px;
-  flex-shrink: 0;         /* 이미지가 찌그러지지 않도록 방지 */
+  flex-shrink: 0;         
 }
 
 .nav-item:hover {
-  color: #2c3e50;
-}
-.divider {
-  margin: 0 15px;
-  color: #dcdde1;
+  color: var(--text-main); /* 변수 적용 */
 }
 
-/* 🔥 Vue Router가 활성화된 링크 태그에 자동으로 부여하는 클래스 스펙 */
+.divider {
+  margin: 0 15px;
+  color: var(--divider-color); /* 변수 적용 */
+}
+
+/* Vue Router가 활성화된 링크 태그 스펙 */
 .navigation-bar .router-link-exact-active {
   color: #3498db;
   border-bottom: 2px solid #3498db;
   padding-bottom: 2px;
 }
 
-/* 과제페이지 스타일 - Component 분리 후 각 페이지별로 이동 */
+/* 과제페이지 스타일 - 대시보드 래퍼 */
 .dashboard-wrapper {
   font-family: 'Pretendard', sans-serif;
-  background-color: #EBF3ED;
-  color: #2C3E50;
+  background-color: var(--dashboard-bg); /* 변수 적용 */
+  color: var(--text-main);                /* 변수 적용 */
   padding: 32px;
   
   width: 100%;          
@@ -102,25 +154,37 @@ h1 {
   margin: 0;           
   box-sizing: border-box; 
   
-  border: 1px solid #D1E2D6;
+  border: 1px solid var(--dashboard-border); /* 변수 적용 */
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(44, 62, 80, 0.08);
   letter-spacing: -0.04em;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
+/* 검색창, 리스트 박스 */
 .search-box,
 .list-box {
-  background: #f8f9fa;
+  background: var(--box-bg);      /* 변수 적용 */
+  border: 1px solid var(--box-border); /* 변수 적용 */
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 15px;
-  border: 1px solid #e9ecef;
+  transition: background-color 0.3s, border-color 0.3s;
 }
+
+/* 입력칸 디자인 보완 */
 input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
   padding: 8px;
   width: 90%;
   font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
 }
+
+/* 배지 스타일 (기존 유지) */
 .badge {
   display: inline-block;
   padding: 4px 8px;
@@ -134,6 +198,8 @@ input {
 .cool {
   background-color: #74b9ff;
 }
+
+/* 상태 바 스타일 (다크모드에서도 잘 보이도록 기본 투명도 및 색상 조절 권장) */
 .status-bar {
   background: #e8f5e9;
   padding: 10px;
@@ -141,4 +207,49 @@ input {
   color: #2e7d32;
   font-weight: bold;
   border-radius: 6px;
+}
+
+
+/* 2. 이미 만드신 nav-links 내부 아이템들을 가로로 나란히 */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+/* 3. 이미 만드신 toggle-groups 내부 아이템들을 가로로 나란히 */
+.toggle-groups {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* 단위 토글과 다크모드 버튼 사이의 여백 */
+}
+
+/* ☀️/🌙 다크모드 토글 버튼 자체 디자인 */
+.theme-toggle-btn {
+  background: var(--button-bg);
+  color: var(--text-main);
+  border: 1.5px solid var(--box-border); 
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  
+  /* ❌ margin-left: auto; <- 이 줄을 반드시 삭제하거나 지워주세요! */
+  
+  transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+/* 버튼 위에 마우스 올렸을 때 효과 */
+.theme-toggle-btn:hover {
+  transform: scale(1.05);
+  /* 마우스를 올리면 테두리가 조금 더 선명해지도록 유도 */
+  border-color: var(--text-muted); 
+}
+
+button img {
+  width: 20px;
+  height: 20px;
 }
