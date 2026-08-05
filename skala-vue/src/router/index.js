@@ -8,17 +8,17 @@ const routes = [
     component: WeatherHomeView,
   },
   {
-    path: '/skala-vue/about',
+    path: '/about',
     name: 'WeatherAbout',
     component: () => import('../views/WeatherAboutView.vue'),
   },
   {
-    path: '/skala-vue/weather/:cityId',
+    path: '/weather/:cityId',
     name: 'WeatherDetail',
     component: () => import('../views/WeatherDetailView.vue'),
   },
   {
-    path: '/skala-vue/:pathMatch(.*)*',
+    path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFoundView.vue'),
   },
