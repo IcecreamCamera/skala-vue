@@ -28,7 +28,12 @@ const cityMapping = {
 
 onMounted(async () => {
   const id = route.params.cityId
-  const targetCity = cityMapping[id]
+  // 🔥 1순위: cityMapping (기본 10개 도시) / 2순위: URL 쿼리 파라미터 (검색 추가 도시)
+  const targetCity = cityMapping[id] || (
+    route.query.q 
+      ? { english: route.query.q, korean: route.query.name || route.query.q }
+      : null
+  )
 
   if (targetCity) {
     isLoading.value = true

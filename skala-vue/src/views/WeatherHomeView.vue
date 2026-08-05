@@ -101,6 +101,7 @@ const fetchRealTimeWeather = async () => {
     
     weatherList.value = responses.map((res, index) => ({
       id: `city_0${index + 1}`,
+      query: DEFAULT_CITIES[index].q, // 🔥 상세 페이지 재호출용 영문 쿼리명
       name: DEFAULT_CITIES[index].name,
       temp: res.data.main.temp,
       status: res.data.weather[0].main,
@@ -158,7 +159,8 @@ const handleSearchCity = async () => {
 
     const newCity = {
       id: `city_search_${Date.now()}`, // 중복되지 않는 고유 ID 생성
-      name: REVERSE_CITY_MAP[res.data.name] || res.data.name,            // API가 반환한 공식 도시 이름
+      name: REVERSE_CITY_MAP[res.data.name] || res.data.name,
+      query: apiQuery, // 🔥 검색 시 사용한 영문 쿼리명 저장   
       temp: res.data.main.temp,
       status: res.data.weather[0].main,
       icon: res.data.weather[0].icon
@@ -221,8 +223,14 @@ const filteredWeatherList = computed(() => {
   )
 })
 
-const handleDetailJump = (id) => {
-  router.push(`/weather/${id}`)
+const handleDetailJump = (item) => {
+  router.push({
+    path: `/weather/${item.id}`,
+    query: {
+      q: item.query,
+      name: item.name,
+    },
+  })
 }
 </script>
 
@@ -251,7 +259,7 @@ const handleDetailJump = (id) => {
           :key="item.id" 
           :city-item="item" 
           @select-card="(msg) => (selectedCityInfo = msg)" 
-          @click-detail="handleDetailJump(item.id)" 
+          @click-detail="handleDetailJump(item)" 
           @delete-card="handleRemoveCity(item.id)"
         />
         <p v-if="filteredWeatherList.length === 0" style="text-align: center; color: #e74c3c; padding: 10px 0">
