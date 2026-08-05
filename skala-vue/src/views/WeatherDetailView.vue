@@ -47,6 +47,10 @@ onMounted(async () => {
       cityData.value = {
         name: targetCity.korean,
         temp: raw.main.temp, // 섭씨 온도 원본 기록
+        feels_like: raw.main.feels_like,
+        temp_min: raw.main.temp_min,
+        temp_max: raw.main.temp_max,
+        pressure: raw.main.pressure,
         status: raw.weather[0].description,
         humidity: `${raw.main.humidity}%`,
         wind: `${raw.wind.speed}m/s`,
@@ -93,9 +97,13 @@ const weatherClass = computed(() => {
           <p>
             실시간 기온: <strong>{{ displayTemp }}{{ configStore.unitSymbol }}</strong>
           </p>
+          <p>체감 온도: {{ cityData.feels_like }}{{ configStore.unitSymbol }}</p>
+          <p>최저 기온: {{ cityData.temp_min }}{{ configStore.unitSymbol }}</p>
+          <p>최고 기온: {{ cityData.temp_max }}{{ configStore.unitSymbol }}</p>
           <p>기상 현황: {{ cityData.status }}</p>
           <p>대기 습도: {{ cityData.humidity }}</p>
           <p>현재 풍속: {{ cityData.wind }}</p>
+          <p>기압: {{ cityData.pressure }} hPa</p>
         </div>
 
         <!-- 📌 동그라미 친 위치: cityData.icon이 존재할 때 실시간 날씨 아이콘 출력 -->
